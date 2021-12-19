@@ -29,18 +29,16 @@ const App: React.FC = (props: any) => {
     const unSub = auth.onAuthStateChanged((user) => {
       !user && props.history.push('login');
     });
-    return () => {
-      unSub();
-    };
-  }, [input]);
+    return () => unSub();
+  }, []);
 
   useEffect(() => {
-    const unsub = onSnapshot(collection(db, 'Tasks'), (snapshot) => {
+    const unSub = onSnapshot(collection(db, 'Tasks'), (snapshot) => {
       setTasks(
         snapshot.docs.map((doc) => ({ id: doc.id, title: doc.data().title }))
       );
     });
-    return () => unsub();
+    return () => unSub();
   }, []);
 
   const newTask = (e: React.MouseEvent<HTMLButtonElement>) => {
